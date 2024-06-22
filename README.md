@@ -1,7 +1,6 @@
-# DeliverUs - Project
+# DeliverUs - Proyecto
 
-This project has been developed by David Guillén, Javier Gutiérrez, and Javier Lozano. It corresponds to the subject Introduction to Software Engineering and Information Systems II (IISSI 2) of Software Engineering in the University of Seville.
-
+Este proyecto ha sido desarrollado por David Guillén, Javier Gutiérrez y Javier Lozano. Corresponde a la asignatura de Introducción a la Ingeniería del Software y Sistemas de Información II (IISSI 2) de Ingeniería del Software en la Universidad de Sevilla.
 
 # DeliverUS - Requisitos del Proyecto
 
