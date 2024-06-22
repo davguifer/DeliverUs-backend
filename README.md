@@ -1,156 +1,146 @@
-# DeliverUS - Project Requirements
+# DeliverUs - Project
 
-## Introduction
-DeliverUS is a made-up company whose business is focused on delivering food from 3rd parties (restaurants) to customers. To this end, we are requested to develop the needed software products which hopefully will boost the company. After interviewing the product owners and some stakeholders, the general objectives and requirements have been agreed, as described in this document.
+This project has been developed by David Guillén, Javier Gutiérrez, and Javier Lozano. It corresponds to the subject Introduction to Software Engineering and Information Systems II (IISSI 2) of Software Engineering in the University of Seville.
 
-## General Objective: Manage customer orders to restaurants
-The software has to enable customers to order products to restaurants. To this end the following objectives have been identified
 
-* Objective 1: Restaurants management
-* Objective 2: Restaurants' products management
-* Objective 3: Restaurants' order management
-* Objective 4: Customers' order management
-* Objective 5: Users management
+# DeliverUS - Requisitos del Proyecto
 
-## Information requirements
-### IR-1: Users
-DeliverUS expects two types of users: restaurant owners and customers. The following information should be stored: First name, last name, email, phone number, avatar image, address and postal code. For login and authentication purposes, a password, a token and a tokenExpiration date should also be stored.
+## Introducción
+DeliverUS es una empresa ficticia cuyo negocio se centra en la entrega de alimentos de terceros (restaurantes) a clientes. Para este fin, se nos solicita desarrollar los productos de software necesarios que, con suerte, impulsarán la empresa. Después de entrevistar a los propietarios del producto y a algunos interesados, se han acordado los objetivos y requisitos generales, como se describe en este documento.
 
-### IR-2: Restaurants
-Owners manage restaurants. The following information should be stored: name, description, address, postal code, url, email, phone number, logo, hero image (it will serve as restaurant background image), shipping costs (default for orders placed to this restaurant), average service time in minutes (which will be computed from the orders record), status. A restaurant status represent if it is accepting orders, currently unavailable, or temporarily/permanently closed.
-There are some predefined restaurant categories on the system, so the restaurant will belong to one restaurant category.
+## Objetivo General: Gestionar pedidos de clientes a restaurantes
+El software debe permitir a los clientes pedir productos a los restaurantes. Para ello se han identificado los siguientes objetivos:
 
-### IR-3: Products
-Products are sold by restaurants. Each product belongs to one restaurant. The following information should be stored: name, description, price, image, order and availability. The order is intended for sorting purposes that could be defined by the owner so the products are ordered according to his/her interests.
+* Objetivo 1: Gestión de restaurantes
+* Objetivo 2: Gestión de productos de los restaurantes
+* Objetivo 3: Gestión de pedidos de los restaurantes
+* Objetivo 4: Gestión de pedidos de los clientes
+* Objetivo 5: Gestión de usuarios
 
-There are some predefined product categories on the system, so the product will belong to one product category.
+## Requisitos de Información
+### RI-1: Usuarios
+DeliverUS espera dos tipos de usuarios: propietarios de restaurantes y clientes. Se debe almacenar la siguiente información: Nombre, apellido, correo electrónico, número de teléfono, imagen de avatar, dirección y código postal. Para propósitos de inicio de sesión y autenticación, también se debe almacenar una contraseña, un token y una fecha de expiración del token.
 
-### IR-4: Orders
-Orders are placed by customers. Each order will include a set of products from one particular restaurant. Orders cannot include products from more than one restaurant. The following information should be stored: creation date (when the customer places the order), start date (when a restaurant accepts the order), sent date (when the order leaves the restaurant) and delivery date (when the customer receives the order), total price of the products included, the address where it has to be delivered, and the shipping costs. Thus, each order can be in one of the following states/statuses: 'pending', 'in process', 'sent', 'delivered'.
+### RI-2: Restaurantes
+Los propietarios gestionan restaurantes. Se debe almacenar la siguiente información: nombre, descripción, dirección, código postal, URL, correo electrónico, número de teléfono, logotipo, imagen principal (servirá como imagen de fondo del restaurante), costos de envío (predeterminado para pedidos realizados a este restaurante), tiempo promedio de servicio en minutos (que se calculará a partir del registro de pedidos), estado. El estado de un restaurante representa si está aceptando pedidos, actualmente no disponible, o cerrado temporal o permanentemente. 
+Hay algunas categorías de restaurantes predefinidas en el sistema, por lo que el restaurante pertenecerá a una categoría de restaurante.
 
-The system has to store the quantity of each product included in the order and the unitary price of each product at the moment of order placement.
+### RI-3: Productos
+Los productos son vendidos por restaurantes. Cada producto pertenece a un restaurante. Se debe almacenar la siguiente información: nombre, descripción, precio, imagen, orden y disponibilidad. La orden está destinada a fines de clasificación que podrían ser definidos por el propietario para que los productos se ordenen según sus intereses.
 
-## Class diagram proposed for design
-From the information requirements and objectives described, the following class diagram is proposed:
+Hay algunas categorías de productos predefinidas en el sistema, por lo que el producto pertenecerá a una categoría de producto.
+
+### RI-4: Pedidos
+Los pedidos son realizados por clientes. Cada pedido incluirá un conjunto de productos de un restaurante en particular. Los pedidos no pueden incluir productos de más de un restaurante. Se debe almacenar la siguiente información: fecha de creación (cuando el cliente realiza el pedido), fecha de inicio (cuando un restaurante acepta el pedido), fecha de envío (cuando el pedido sale del restaurante) y fecha de entrega (cuando el cliente recibe el pedido), precio total de los productos incluidos, la dirección donde debe entregarse y los costos de envío. Por lo tanto, cada pedido puede estar en uno de los siguientes estados: 'pendiente', 'en proceso', 'enviado', 'entregado'.
+
+El sistema debe almacenar la cantidad de cada producto incluido en el pedido y el precio unitario de cada producto en el momento de la realización del pedido.
+
+## Diagrama de Clases Propuesto para el Diseño
+A partir de los requisitos de información y objetivos descritos, se propone el siguiente diagrama de clases:
 
 ![DeliverUS-EntityDiagram drawio (3)](https://user-images.githubusercontent.com/19324988/155700850-bb7817fb-8818-440b-97cb-4fbd33787f20.png)
 
-## Business rules
-* BR1: If an order total price is greater than 10€ the shipping costs will be 0€ (free shipping).
-* BR2: An order can only include products from one restaurant
-* BR3: Once an order is placed, it cannot be modified.
+## Reglas de Negocio
+* RN1: Si el precio total de un pedido es mayor de 10€ los costos de envío serán 0€ (envío gratuito).
+* RN2: Un pedido solo puede incluir productos de un restaurante.
+* RN3: Una vez que se realiza un pedido, no puede ser modificado.
 
-## Functional requirements
-### Customer functional requirements:
-As a customer, the system has to provide the following functionalities:
-#### FR1: Restaurants listing
-Customers will be able to query all restaurants.
-#### FR2: Restaurants details and menu
-Customers will be able to query restaurants details and the products offered by them.
-#### FR3: Add, edit and remove products to a new order
-A customer can add several products, and several units of a product to a new order. Before confirming, customer can edit and remove products.
-#### FR4: Confirm or dismiss new order
-If an order is confirmed, it is created with the state _pending_. Shipping costs must follow BR1: _Orders greater than 10€ don't have service fee_. An order is automatically related to the customer who created it.
-If an order is dismissed, nothing is created.
-#### FR5: Listing my confirmed orders
-A Customer will be able to check his/her confirmed orders, sorted from the most recent to the oldest.
-#### FR6: Show order details
-A customer will be able to look his/her orders up. The system should provide all details of an order, including the ordered products and their prices.
-#### FR7: Show top 3 products
-Customers will be able to query top 3 products from all restaurants. Top products are the most popular ones, in other words the best sellers.
-#### FR8: Edit/delete order
-If the order is in the state 'pending', the customer can edit or remove the products included or remove the whole order. The delivery address can also be modified in the state 'pending'.
+## Requisitos Funcionales
+### Requisitos Funcionales del Cliente:
+Como cliente, el sistema debe proporcionar las siguientes funcionalidades:
+#### RF1: Listado de restaurantes
+Los clientes podrán consultar todos los restaurantes.
+#### RF2: Detalles del restaurante y menú
+Los clientes podrán consultar los detalles de los restaurantes y los productos que ofrecen.
+#### RF3: Agregar, editar y eliminar productos en un nuevo pedido
+Un cliente puede agregar varios productos y varias unidades de un producto a un nuevo pedido. Antes de confirmar, el cliente puede editar y eliminar productos.
+#### RF4: Confirmar o descartar un nuevo pedido
+Si se confirma un pedido, se crea con el estado _pendiente_. Los costos de envío deben seguir la RN1: _Los pedidos superiores a 10€ no tienen tarifa de servicio_. Un pedido se relaciona automáticamente con el cliente que lo creó.
+Si se descarta un pedido, no se crea nada.
+#### RF5: Listar mis pedidos confirmados
+Un cliente podrá consultar sus pedidos confirmados, ordenados del más reciente al más antiguo.
+#### RF6: Mostrar detalles del pedido
+Un cliente podrá consultar sus pedidos. El sistema debe proporcionar todos los detalles de un pedido, incluidos los productos pedidos y sus precios.
+#### RF7: Mostrar los 3 mejores productos
+Los clientes podrán consultar los 3 mejores productos de todos los restaurantes. Los productos principales son los más populares, en otras palabras, los más vendidos.
+#### RF8: Editar/eliminar pedido
+Si el pedido está en el estado 'pendiente', el cliente puede editar o eliminar los productos incluidos o eliminar todo el pedido. La dirección de entrega también se puede modificar en el estado 'pendiente'.
+Si el pedido está en el estado 'enviado' o 'entregado' no se permite la edición.
 
-If the order is in the state 'sent' or 'delivered' no edition is allowed.
+### Requisitos Funcionales del Propietario:
+Como propietario de un restaurante, el sistema debe proporcionar las siguientes funcionalidades:
+#### RF1: Agregar, listar, editar y eliminar restaurantes
+Los restaurantes están relacionados con un propietario, por lo que los propietarios pueden realizar estas operaciones en los restaurantes que poseen. Si un propietario crea un restaurante, se relacionará automáticamente con él. Si se elimina un restaurante, también se deben eliminar todos sus productos.
+#### RF2: Agregar, listar, editar y eliminar productos
+Un propietario puede crear, leer, actualizar y eliminar los productos relacionados con cualquiera de sus restaurantes.
+#### RF3: Listar pedidos de un restaurante
+Un propietario podrá inspeccionar los pedidos de cualquiera de los restaurantes que posee. El pedido debe incluir los productos relacionados.
+#### RF4: Cambiar el estado de un pedido
+Un propietario puede cambiar el estado de un pedido. Los estados pueden cambiar de: _pendiente_ a _en proceso_, de _en proceso_ a _enviado_, y finalmente de _enviado_ a _entregado_.
+#### RF5: Mostrar un tablero que incluya algunos análisis comerciales:
+ #pedidosDeAyer, #pedidosPendientes, #pedidosServidosHoy, #facturadoHoy (€)
 
+## Requisitos No Funcionales
+### Portabilidad
+El sistema debe proporcionar a los usuarios la posibilidad de ser accedido y ejecutado a través de los sistemas operativos más populares para dispositivos móviles y de escritorio.
 
-### Owner functional requirements:
-As a restaurant owner, the system has to provide the following functionalities:
-#### FR1: Add, list, edit and remove Restaurants
-Restaurants are related to an owner, so owners can perform these operations to the restaurants owned by him. If an owner creates a Restaurant, it will be automatically related (owned) to him. If a restaurant is removed, all its products must be removed as well.
-#### FR2: Add, list, edit and remove Products
-An owner can create, read, update and delete the products related to any of his owned Restaurants.
-#### FR3: List orders of a Restaurant.
-An owner will be able to inspect orders of any of the restaurants owned by him. The order should include products related.
-#### FR4: To change the state of an order
-An owner can change the state of an order. States can change from: _pending_ to _in process_, from _in process_ to _sent_, and finally from _sent_ to _delivered_.
-#### FR5: To Show a dashboard including some business analytics:
- #yesterdayOrders, #pendingOrders, #todaysServedOrders, #invoicedToday (€)
+### Seguridad
+El backend debe incluir medidas básicas para evitar la explotación de vulnerabilidades generales de seguridad, tales como: inyección de SQL, ContentSecurityPolicy, CrossOriginEmbedderPolicy, CrossOriginOpenerPolicy, CrossOriginResourcePolicy, dnsPrefetchControl, expectCt, frameguard, hidePoweredBy, helmet.hsts, ieNoOpen, noSniff, originAgentCluster, permittedCrossDomainPolicies, referrerPolicy, xssFilter.
 
+Para propósitos de inicio de sesión y autenticación, también se debe almacenar una contraseña, un token y una fecha de expiración del token (estrategia de autenticación con token) para los usuarios.
 
-## Non-functional requirements
-### Portability
-The system has to provide users the possibility to be accessed and run through the most popular operating systems for mobile and desktop devices.
+Nota: Este tema no se centra en cuestiones de seguridad, pero utilizaremos bibliotecas creadas por expertos en ciberseguridad que nos ayudarán a incluir estas medidas. En el ecosistema de Node.js, Sequelize incluye sanitización de datos y otras medidas para evitar ataques de inyección de SQL y utilizaremos el paquete helmet para el resto de posibles vulnerabilidades de seguridad al publicar servicios REST.
 
-### Security
-Backend should include basic measures to prevent general security holes to be exploited such as: sql injection, contentSecurityPolicy, crossOriginEmbedderPolicy, crossOriginOpenerPolicy, crossOriginResourcePolicy, dnsPrefetchControl, expectCt, frameguard, hidePoweredBy, helmet.hsts, ieNoOpen, noSniff, originAgentCluster, permittedCrossDomainPolicies, referrerPolicy, xssFilter.
+### Escalabilidad
+El sistema debe utilizar un conjunto de tecnologías que puedan desplegarse en más de una máquina, listas para la escalabilidad horizontal.
 
-For login and authentication purposes, a password, a token and a tokenExpiration (token authentication strategy) date should also be stored for users.
+## Arquitectura Propuesta
+Una vez que los arquitectos de software de nuestra empresa han analizado los requisitos, se propone la siguiente arquitectura general:
+1. Modelo de arquitectura cliente-servidor.
+2. Desarrollo independiente del frontend y backend.
+3. Un desarrollo de frontend para cada tipo de usuario (Clientes y Propietarios).
 
-Note: This subject does not focus on security topics, but we will use libraries made by cybersecurity experts that will help us to include these measures. In Node.js ecosystem, Sequelize includes data sanitization and other measures to prevent SQL injection attacks and we will use the helmet package for the rest of potential security holes when publishing REST services.
-
-### Scalability
-The system should use a stack of technologies that could be deployed in more than one machine, horizontal scalability ready.
-
-## Proposed architecture
-Once that requirements have been analyzed by our company's software architects, the following general architecture is proposed:
-1. Client-server architecture model.
-2. Front-end and backend independent developments.
-3. One front-end development for each type of user (Customer and Owners).
-
-Moreover, these architects propose the following technological stack:
+Además, estos arquitectos proponen el siguiente stack tecnológico:
 1. Backend:
-   1. Relational database, Mariadb server. It may be deployed on a machine other than where the rest of subsystems are deployed.
-   2. DeliverUS backend application logic developed in Node.js application server that publishes functionalities as RESTful services helped by Express.js framework.
-2. Front-end:
-   1. React-native based clients for both front-ends, deployable as Android, iOS or web Apps.
-   1. DeliverUS-Owner App for the functionalities intended for restaurants' owners.
-   3. DeliverUS-Customer App for the functionalities intended for customers.
+   1. Base de datos relacional, servidor Mariadb. Puede desplegarse en una máquina distinta a donde se desplieguen el resto de subsistemas.
+   2. Lógica de aplicación del backend de DeliverUS desarrollada en servidor de aplicaciones Node.js que publica funcionalidades como servicios RESTful con la ayuda del framework Express.js.
+2. Frontend:
+   1. Clientes basados en React-native para ambos frontends, desplegables como Apps para Android, iOS o web.
+   1. App DeliverUS-Owner para las funcionalidades destinadas a los propietarios de restaurantes.
+   3. App DeliverUS-Customer para las funcionalidades destinadas a los clientes.
 
 
+# Pasos para el despliegue del backend:
+1. Clona tu repositorio privado en tu entorno de desarrollo local abriendo VSCode y clonándolo abriendo la paleta de comandos (Ctrl+Shift+P o F1) y `Git clone` este repositorio, o usando la terminal y ejecutando:
 
-# IISSI-2 Software Engineering grade group project:
-Students will group together to develop the course project. The size and complexity of the project to be developed is intended for groups from 3 to 4 students.
-
-During lab sessions, teachers will conduct and instruct students about the development of the backend and frontend of the DeliverUS App requirements related to owner functionalities. Specifically:
-* Lab 1, 2 and 3: Backend required developments to support owner frontend app and some common functionalities.
-* Lab 4, 5, 6, 7 and 8: Frontend app for owners.
-
-Students will be provided with:
-* A backend template that includes the implementation of labs 1, 2 and 3
-* A frontend implementation of the DeliverUS app for owners.
-* A frontend template for the DeliverUS app for customers.
-
-Students are required to:
-* Complete the backend template provided to include the required functionalities for customers.
-* Complete the frontend template provided to develop the customer frontend App.
-
-# Backend deployment steps:
-1. Accept the assignment of your github classroom if you have not done it before. Once you accepted it, you will have your own copy of this project template.
-2. Clone your private repository at your local development environment by opening VScode and clone it by opening Command Palette (Ctrl+Shift+P or F1) and `Git clone` this repository, or using the terminal and running
-```PowerShell
-git clone <url>
+```
+git clone <url> 
 ```
 
-It may be necessary to setup your github username by running the following commands on your terminal:
-```PowerShell
-git config --global user.name "FIRST_NAME LAST_NAME"
-git config --global user.email "MY_NAME@example.com"
+Puede ser necesario configurar tu nombre de usuario de GitHub ejecutando los siguientes comandos en tu terminal:
+
+```bash
+git config --global user.name "NOMBRE_APELLIDO"
+git config --global user.email "MI_NOMBRE@ejemplo.com" 
 ```
 
-In case you are asked if you trust the author, please select yes.
+En caso de que se te pregunte si confías en el autor, por favor selecciona sí.
 
-3. Setup your environment file. As explained in labs, it is needed to create a copy of the `.env.example` file, name it `.env` and include your environment variables, specially your database username and password.
+Configura tu archivo de entorno. Es necesario crear una copia del archivo `.env.example`, nombrarlo `.env` e incluir tus variables de entorno, especialmente tu nombre de usuario y contraseña de la base de datos.
 
-4. Install dependencies. Run `npm install` to download and install packages to the current project folder.
+Instala las dependencias. Ejecuta 
+``` npm install ``` 
+para descargar e instalar los paquetes en la carpeta actual del proyecto.
 
-5. Check and run mariaDB server.
-* Windows:
-  * If installed as service run `services.msc` and start the mariadb service
-  * If installed as binary, locate your mariaDB binary and start.
-* MacOS:
-```Powershell
+Verifica y ejecuta el servidor de MariaDB.
+
+**Windows:**
+- Si está instalado como servicio, ejecuta `services.msc` y inicia el servicio de MariaDB.
+- Si está instalado como binario, localiza el binario de MariaDB y arráncalo.
+
+**MacOS:**
 mysql.server start
-```
-6. Run migrations and seeders. You can use the previously configured task by opening the command palette Command Palette (Ctrl+Shift+P or F1) `Tasks: run task` and select `Rebuild database`
-7. Run `npm start`
+Ejecuta migraciones y sembradoras. Puedes utilizar la tarea configurada previamente abriendo la paleta de comandos Command Palette (Ctrl+Shift+P o F1) Tasks: run task y selecciona Rebuild database.
+
+Finalmente, ejecuta `npm start`.
+
